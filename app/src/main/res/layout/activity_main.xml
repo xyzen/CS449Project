@@ -6,13 +6,448 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <TableLayout
+        android:id="@+id/board"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <TableRow
+            android:id="@+id/rank7"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_b7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_c7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_d7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_e7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_f7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_g7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_h7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank6"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_b6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_c6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_d6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_e6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_f6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_g6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_h6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_b5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_c5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_d5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_e5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_f5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_g5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_h5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_b4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_c4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_d4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_e4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_f4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_g4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_h4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_b3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_c3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_d3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_e3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_f3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_g3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_h3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_b2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_c2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_d2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_e2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_f2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_g2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_h2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_b1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_c1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_d1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_e1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_f1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_g1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_h1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rank0"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/cell_a0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_b0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_c0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_d0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_e0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_f0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+
+            <ImageView
+                android:id="@+id/cell_g0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard1" />
+
+            <ImageView
+                android:id="@+id/cell_h0"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorBoard2" />
+        </TableRow>
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
