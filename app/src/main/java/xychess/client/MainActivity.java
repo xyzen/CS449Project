@@ -10,28 +10,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String piece;
-        for (int rank = 0; rank < 8; rank++) {
-            for (int file = 0; file < 8; file++) {
-                piece = board[rank][file];
-                if (tokenImg.containsKey(piece)) {
-                    ((ImageView) findViewById(cells[rank][file])).setImageResource(tokenImg.get(piece));
-                }
-            }
-        }
+        initBoard(findViewById(0));
     }
 
-    private String[][]board = new String[][] {
-            // initial board should be upside-down
-            { "wr", "wn", "wb", "wq", "wk", "wb", "wn", "wr" },
-            { "wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp" },
-            { "", "", "", "", "", "", "", "" },
-            { "", "", "", "", "", "", "", "" },
-            { "", "", "", "", "", "", "", "" },
-            { "", "", "", "", "", "", "", "" },
-            { "bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp" },
-            { "br", "bn", "bb", "bq", "bk", "bb", "bn", "br" }
-    };
+    private String selected = "";
+
+    private String[][]board;
 
     private static final java.util.HashMap<String, Integer> tokenImg = new java.util.HashMap<>();
     static {
@@ -59,4 +43,58 @@ public class MainActivity extends AppCompatActivity {
             { R.id.cell_a6, R.id.cell_b6, R.id.cell_c6, R.id.cell_d6, R.id.cell_e6, R.id.cell_f6, R.id.cell_g6, R.id.cell_h6 },
             { R.id.cell_a7, R.id.cell_b7, R.id.cell_c7, R.id.cell_d7, R.id.cell_e7, R.id.cell_f7, R.id.cell_g7, R.id.cell_h7 }
     };
+
+    public void selectCell(android.view.View view) {
+        int view_id = view.getId();
+        int rank = 8, file = 8;
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                if (cells[r][f] == view_id) {
+                    rank = r;
+                    file = f;
+                    break;
+                }
+            }
+        }
+        if (rank == 8 || file == 8) {
+            return;
+        }
+        if (selected == "") {
+            ((ImageView) findViewById(view_id)).setImageResource(0);
+            selected = board[rank][file];
+            board[rank][file] = "";
+        }
+        else if (tokenImg.containsKey(selected)) {
+            ((ImageView) findViewById(view_id)).setImageResource(tokenImg.get(selected));
+            board[rank][file] = selected;
+            selected = "";
+        }
+    }
+
+    public void initBoard(android.view.View view) {
+        board = new String[][]{
+                // initial board: *should* appear upside-down here
+                {"wr", "wn", "wb", "wq", "wk", "wb", "wn", "wr"},
+                {"wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"},
+                {"br", "bn", "bb", "bq", "bk", "bb", "bn", "br"}
+        };
+        refreshView();
+    }
+
+    private void refreshView() {
+        String piece;
+        for (int rank = 0; rank < 8; rank++) {
+            for (int file = 0; file < 8; file++) {
+                piece = board[rank][file];
+                if (tokenImg.containsKey(piece)) {
+                    ((ImageView) findViewById(cells[rank][file])).setImageResource(tokenImg.get(piece));
+                }
+            }
+        }
+    }
 }
