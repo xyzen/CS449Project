@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
                 if (tokenImg.containsKey(piece)) {
                     ((ImageView) findViewById(cells[rank][file])).setImageResource(tokenImg.get(piece));
                 }
+                else {
+                    ((ImageView) findViewById(cells[rank][file])).setImageResource(0);
+                }
             }
         }
     }
