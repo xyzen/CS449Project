@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String selected = "";
-
+    private char turn = 'w';
     private String[][]board;
 
     private static final java.util.HashMap<String, Integer> tokenImg = new java.util.HashMap<>();
@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (selected == "") {
+            String token = board[rank][file];
+            if (token == "" || token.charAt(0) != turn) {
+                return;
+            }
             ((ImageView) findViewById(view_id)).setImageResource(0);
             selected = board[rank][file];
             board[rank][file] = "";
@@ -68,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
             ((ImageView) findViewById(view_id)).setImageResource(tokenImg.get(selected));
             board[rank][file] = selected;
             selected = "";
+            changeTurns();
+        }
+    }
+
+    private void changeTurns() {
+        if (turn == 'w') {
+            turn = 'b';
+        }
+        else {
+            turn = 'w';
         }
     }
 
@@ -84,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 {"br", "bn", "bb", "bq", "bk", "bb", "bn", "br"}
         };
         refreshView();
+        selected = "";
+        turn = 'w';
     }
 
     private void refreshView() {
@@ -99,5 +115,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private boolean checkMove(int rank, int file, String piece) {
+        return true;
     }
 }
