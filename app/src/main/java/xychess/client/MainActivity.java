@@ -7,9 +7,9 @@ package xychess.client;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String selected = "";
     private char turn = 'w';
     private String[][] board;
+    private String slctd_token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         refreshBoardView();
         refreshTurnView("White to Move");
         // reinitialize data values
-        selected = "";
+        slctd_token = "";
         turn = 'w';
     }
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void refreshCellView(int rank, int file, int drawable) {
+    private void refreshCellView(int rank, int file, Integer drawable) {
         ((ImageView) findViewById(cells[rank][file]))
                 .setImageResource(drawable);
     }
@@ -130,22 +130,22 @@ public class MainActivity extends AppCompatActivity {
         if (rank == 8 || file == 8) {
             return;
         }
-        String token = board[rank][file];
-        if (selected == "") {
+        if (slctd_token == "") {
+            String token = board[rank][file];
             if (token == "" || token.charAt(0) != turn) {
                 return;
             }
-            ((ImageView) findViewById(view_id)).setImageResource(0);
-            selected = token;
+            refreshCellView(rank, file, 0);
+            slctd_token = token;
             board[rank][file] = "";
         }
-        else if (tokenImg.containsKey(selected)) {
-            if (!checkMove(rank, file, token)) {
+        else if (tokenImg.containsKey(slctd_token)) {
+            if (!checkMove(rank, file, slctd_token)) {
                 return;
             }
-            ((ImageView) findViewById(view_id)).setImageResource(tokenImg.get(selected));
-            board[rank][file] = selected;
-            selected = "";
+            refreshCellView(rank, file, tokenImg.get(slctd_token));
+            board[rank][file] = slctd_token;
+            slctd_token = "";
             changeTurns();
         }
     }
