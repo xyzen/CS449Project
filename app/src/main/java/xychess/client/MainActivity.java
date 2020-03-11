@@ -1,15 +1,16 @@
 package xychess.client;
 
-        import androidx.appcompat.app.AppCompatActivity;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
     private char turn = 'w';
     private String[][] board;
-    private String slctd_token = "";
+    private String selected_token = "";
+    private int selected_rank = 8, selected_file = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,18 @@ public class MainActivity extends AppCompatActivity {
             { R.id.cell_a7, R.id.cell_b7, R.id.cell_c7, R.id.cell_d7, R.id.cell_e7, R.id.cell_f7, R.id.cell_g7, R.id.cell_h7 }
     };
 
-    private void initBoard() {
+    public void newGame(android.view.View view) {
+        ConfirmNewGameDialog cngd = new ConfirmNewGameDialog(this);
+        cngd.show(getSupportFragmentManager(), "confirm");
+    }
+
+    protected void initBoard() {
         // no View is attached to this call
         // --> 0 is just a garbage value
         initBoard(findViewById(0));
     }
 
-    public void initBoard(android.view.View view) {
+    private void initBoard(android.view.View view) {
         board = new String[][]{
                 // initial board piece tokens
                 // *should* appear upside-down here
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         refreshBoardView();
         refreshTurnView("White to Move");
         // reinitialize data values
-        slctd_token = "";
+        selected_token = "";
         turn = 'w';
     }
 
@@ -130,27 +136,40 @@ public class MainActivity extends AppCompatActivity {
         if (rank == 8 || file == 8) {
             return;
         }
-        if (slctd_token == "") {
+        if (selected_token == "") {
             String token = board[rank][file];
             if (token == "" || token.charAt(0) != turn) {
                 return;
             }
             refreshCellView(rank, file, 0);
-            slctd_token = token;
+            selected_token = token;
             board[rank][file] = "";
+            selected_rank = rank;
+            selected_file = file;
         }
-        else if (tokenImg.containsKey(slctd_token)) {
-            if (!checkMove(rank, file, slctd_token)) {
-                return;
+        else if (tokenImg.containsKey(selected_token)) {
+            if (checkMove(rank, file, selected_token)) {
+                changeTurns();
             }
-            refreshCellView(rank, file, tokenImg.get(slctd_token));
-            board[rank][file] = slctd_token;
-            slctd_token = "";
-            changeTurns();
+            else {
+                rank  = selected_rank;
+                file  = selected_file;
+            }
+            refreshCellView(rank, file, tokenImg.get(selected_token));
+            board[rank][file] = selected_token;
+            selected_token = "";
+            selected_rank  = 8;
+            selected_file  = 8;
         }
     }
 
     private boolean checkMove(int rank, int file, String piece) {
-        return true;
+        if (rank != selected_rank || file != selected_file) {
+            String taken = board[rank][file];
+            if ((taken == "") || (taken.charAt(0) != selected_token.charAt(0))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
