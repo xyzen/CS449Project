@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkQueenMove(int rank, int file) {
-        return true;
+        return clearDiagonal(rank, file) || clearRankOrFile(rank, file);
     }
 
     private boolean checkKingMove(int rank, int file) {
