@@ -226,7 +226,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkKnightMove(int rank, int file) {
-        return true;
+        // Get distance of traversal along axes
+        int rank_diff = Math.abs(rank - selected_rank),
+                file_diff = Math.abs(file - selected_file);
+        // Check for a 2x1 or 1x2 traversal
+        if ((rank_diff == 1 && file_diff == 2)
+                || (rank_diff == 2 && file_diff == 1)) {
+            return true;
+        }
+        // Movement didn't match pattern. Move blocked!
+        return false;
     }
 
     private boolean checkRookMove(int rank, int file) {
@@ -238,7 +247,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkKingMove(int rank, int file) {
-        return true;
+        // Get distance of traversal along axes
+        int rank_diff = Math.abs(rank - selected_rank),
+                file_diff = Math.abs(file - selected_file);
+        // Check for 1x0, 0x1, or 1x1 traversal
+        if ((rank_diff == 1 && file_diff == 0)
+                || (rank_diff == 0 && file_diff == 1)
+                || (rank_diff == 1 && file_diff == 1)) {
+            return true;
+        }
+        // Movement didn't match pattern. Move blocked!
+        return false;
     }
 
     private boolean clearDiagonal(int rank, int file) {
