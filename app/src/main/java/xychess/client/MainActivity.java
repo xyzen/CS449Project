@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (selected_token == "") {
             String token = board[rank][file];
+            // Check for empty selections or out-of-turn moves
             if (token == "" || token.charAt(0) != turn) {
                 return;
             }
@@ -221,15 +222,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkBishopMove(int rank, int file) {
-        int rank_diff = Math.abs(rank - selected_rank);
-        int file_diff = Math.abs(file - selected_file);
-        if (rank_diff != file_diff) {
-            return false;
-        }
-        if (clearDiagonal(rank, file)) {
-            return true;
-        }
-        return false;
+        return clearDiagonal(rank, file);
     }
 
     private boolean checkKnightMove(int rank, int file) {
@@ -237,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkRookMove(int rank, int file) {
-        return true;
+        return clearRankOrFile(rank, file);
     }
 
     private boolean checkQueenMove(int rank, int file) {
@@ -249,23 +242,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean clearDiagonal(int rank, int file) {
+        // Get number of ranks and files traversed
         int rank_diff = rank - selected_rank,
                 file_diff = file - selected_file;
+        // Check that same number of ranks and files traversed
+        if (Math.abs(rank_diff) != Math.abs(file_diff)) {
+            // Movement isn't diagonal. Move blocked!
+            return false;
+        }
+        // Get direction of traversal along each axis (-1 or 1)
         int rank_sign = rank_diff < 0 ? -1 : 1,
                 file_sign = file_diff < 0 ? -1 : 1;
-        int r = selected_rank + rank_sign,
-                f = selected_file + file_sign;
-        while (r != rank && f != file) {
+        // Start at the origin cell
+        int r = selected_rank,
+                f = selected_file;
+        // Check each cell between
+        while (r != rank || f != file) {
+            // Check this cell
             if (board[r][f] != "") {
+                // Cell isn't empty! Move blocked!
                 return false;
             }
+            // Traverse one cell along each axis
             r += rank_sign;
             f += file_sign;
         }
+        // All cells between were empty.
         return true;
     }
 
-    private boolean clearPath(int rank, int file) {
+    private boolean clearRankOrFile(int rank, int file) {
+        // Check that movement is along one rank or file
+        int rank_diff = rank - selected_rank,
+                file_diff = file - selected_file;
+        if (rank_diff != 0 && file_diff != 0) {
+            // Movement is along both axes. Move blocked!
+            return false;
+        }
+        // Get direction of movement along each axis (-1, 0, or 1)
+        int rank_step = rank_diff == 0 ? 0 : rank_diff < 0 ? -1 : 1,
+                file_step = file_diff == 0 ? 0 : file_diff < 0 ? -1 : 1;
+        // Start at origin cell
+        int r = selected_rank,
+                f = selected_file;
+        // Check that each intermediate cell is empty
+        while (r != rank || f != file) {
+            // Check this cell
+            if (board[r][f] != "") {
+                // Cell isn't empty! Move blocked!
+                return false;
+            }
+            // Traverse to next cell
+            r += rank_step;
+            f += file_step;
+        }
+        // All intermediate cells were empty.
         return true;
     }
 }
