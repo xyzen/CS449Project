@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             selected_file = file;
         }
         else if (tokenImg.containsKey(selected_token)) {
-            if (checkMove(rank, file, selected_token)) {
+            if (checkMove(rank, file)) {
                 changeTurns();
             }
             else {
@@ -163,13 +163,109 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkMove(int rank, int file, String piece) {
-        if (rank != selected_rank || file != selected_file) {
-            String taken = board[rank][file];
-            if ((taken == "") || (taken.charAt(0) != selected_token.charAt(0))) {
-                return true;
+    private boolean checkMove(int rank, int file) {
+        // Check that piece was not placed in its original position
+        if (rank == selected_rank && file == selected_file) {
+            return false;
+        }
+        // Check that player is not taking their own piece
+        String taken = board[rank][file];
+        if (taken != "") {
+            char moved_color = selected_token.charAt(0),
+                    taken_color = taken.charAt(0);
+            if (moved_color == taken_color) {
+                return false;
             }
         }
+        // Check moves based on type of piece
+        char piece_type = selected_token.charAt(1);
+        switch(piece_type) {
+            case('p'):
+                if (!checkPawnMove(rank, file, taken)) {
+                    return false;
+                }
+                break;
+            case('b'):
+                if (!checkBishopMove(rank, file)) {
+                    return false;
+                }
+                break;
+            case('n'):
+                if (!checkKnightMove(rank, file)) {
+                    return false;
+                }
+                break;
+            case('r'):
+                if (!checkRookMove(rank, file)) {
+                    return false;
+                }
+                break;
+            case('q'):
+                if (!checkQueenMove(rank, file)) {
+                    return false;
+                }
+                break;
+            case('k'):
+                if (!checkKingMove(rank, file)) {
+                    return false;
+                }
+                break;
+        }
+        // TODO: Check that resulting state
+        //  does not cause self-check
+        return true;
+    }
+
+    private boolean checkPawnMove(int rank, int file, String taken) {
+        return true;
+    }
+
+    private boolean checkBishopMove(int rank, int file) {
+        int rank_diff = Math.abs(rank - selected_rank);
+        int file_diff = Math.abs(file - selected_file);
+        if (rank_diff != file_diff) {
+            return false;
+        }
+        if (clearDiagonal(rank, file)) {
+            return true;
+        }
         return false;
+    }
+
+    private boolean checkKnightMove(int rank, int file) {
+        return true;
+    }
+
+    private boolean checkRookMove(int rank, int file) {
+        return true;
+    }
+
+    private boolean checkQueenMove(int rank, int file) {
+        return true;
+    }
+
+    private boolean checkKingMove(int rank, int file) {
+        return true;
+    }
+
+    private boolean clearDiagonal(int rank, int file) {
+        int rank_diff = rank - selected_rank,
+                file_diff = file - selected_file;
+        int rank_sign = rank_diff < 0 ? -1 : 1,
+                file_sign = file_diff < 0 ? -1 : 1;
+        int r = selected_rank + rank_sign,
+                f = selected_file + file_sign;
+        while (r != rank && f != file) {
+            if (board[r][f] != "") {
+                return false;
+            }
+            r += rank_sign;
+            f += file_sign;
+        }
+        return true;
+    }
+
+    private boolean clearPath(int rank, int file) {
+        return true;
     }
 }
