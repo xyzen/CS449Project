@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    private char turn = 'w';
+    private char whose_turn = 'w';
     private String[][] board;
     private String selected_token = "";
     private int selected_rank = 8, selected_file = 8;
@@ -81,17 +81,17 @@ public class MainActivity extends AppCompatActivity {
         refreshTurnView("White to Move");
         // reinitialize data values
         selected_token = "";
-        turn = 'w';
+        whose_turn = 'w';
     }
 
     private void changeTurns() {
         // toggle turn char and refresh turn view
-        if (turn == 'w') {
-            turn = 'b';
+        if (whose_turn == 'w') {
+            whose_turn = 'b';
             refreshTurnView("Black to Move");
         }
         else {
-            turn = 'w';
+            whose_turn = 'w';
             refreshTurnView("White to Move");
         }
     }
@@ -136,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
         if (rank == 8 || file == 8) {
             return;
         }
-        if (selected_token == "") {
+        if (selected_token.equals("")) {
             String token = board[rank][file];
             // Check for empty selections or out-of-turn moves
-            if (token == "" || token.charAt(0) != turn) {
+            if (token.equals("") || token.charAt(0) != whose_turn) {
                 return;
             }
             refreshCellView(rank, file, 0);
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Check that player is not taking their own piece
         String taken = board[rank][file];
-        if (taken != "") {
+        if (!taken.equals("")) {
             char moved_color = selected_token.charAt(0),
                     taken_color = taken.charAt(0);
             if (moved_color == taken_color) {
@@ -218,7 +218,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkPawnMove(int rank, int file, String taken) {
-        return true;
+        // Get direction for current team
+        int forward = this.whose_turn == 'w' ? 1 : -1;
+        // Get distances traveled
+        int rank_diff = rank - this.selected_rank,
+                file_diff = file - this.selected_file;
+        // Check for three cases:
+        if (file_diff == 0 && taken.equals("")) {
+        // 1. One space forward
+            if (rank_diff == forward) {
+                return true;
+            }
+            // Get starting rank
+            int start = this.whose_turn == 'w' ? 1 : 6;
+        // 2. First move; two spaces
+            if (this.selected_rank == start && rank_diff == 2 * forward) {
+                return true;
+            }
+        }
+        // 3. Diagonal attack
+        if (Math.abs(file_diff) == 1 && rank_diff == forward && !taken.equals("")) {
+            return true;
+        }
+        return false;
     }
 
     private boolean checkBishopMove(int rank, int file) {
@@ -230,12 +252,8 @@ public class MainActivity extends AppCompatActivity {
         int rank_diff = Math.abs(rank - selected_rank),
                 file_diff = Math.abs(file - selected_file);
         // Check for a 2x1 or 1x2 traversal
-        if ((rank_diff == 1 && file_diff == 2)
-                || (rank_diff == 2 && file_diff == 1)) {
-            return true;
-        }
-        // Movement didn't match pattern. Move blocked!
-        return false;
+        return (rank_diff == 1 && file_diff == 2)
+                || (rank_diff == 2 && file_diff == 1);
     }
 
     private boolean checkRookMove(int rank, int file) {
@@ -251,13 +269,9 @@ public class MainActivity extends AppCompatActivity {
         int rank_diff = Math.abs(rank - selected_rank),
                 file_diff = Math.abs(file - selected_file);
         // Check for 1x0, 0x1, or 1x1 traversal
-        if ((rank_diff == 1 && file_diff == 0)
+        return (rank_diff == 1 && file_diff == 0)
                 || (rank_diff == 0 && file_diff == 1)
-                || (rank_diff == 1 && file_diff == 1)) {
-            return true;
-        }
-        // Movement didn't match pattern. Move blocked!
-        return false;
+                || (rank_diff == 1 && file_diff == 1);
     }
 
     private boolean clearDiagonal(int rank, int file) {
