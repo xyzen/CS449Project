@@ -7,10 +7,21 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    private char whose_turn = 'w';
+    // Board representation
     private String[][] board;
+
+    // Basic movement flags
+    private char whose_turn = 'w';
     private String selected_token = "";
     private int selected_rank = 8, selected_file = 8;
+
+    // White En Passant (wep) flags
+    private boolean wep_attack_pending = false;
+    private int wep_head_rank = 8, wep_head_file = 8, wep_tail_rank = 8, wep_tail_file = 8;
+
+    // Black En Passant (bep) flags
+    private boolean bep_attack_pending = false;
+    private int bep_head_rank = 8, bep_head_file = 8, bep_tail_rank = 8, bep_tail_file = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
                 .setImageResource(drawable);
     }
 
+    private void resetEnPassant() {
+        if (whose_turn == 'w') {
+            wep_attack_pending = false;
+            wep_head_rank = wep_head_file = wep_tail_rank = wep_tail_file = 8;
+        } else {
+            bep_attack_pending = false;
+            bep_head_rank = bep_head_file = bep_tail_rank = bep_tail_file = 8;
+        }
+    }
+
     public void selectCell(android.view.View view) {
         int view_id = view.getId();
         int rank = 8, file = 8;
@@ -133,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        if (rank == 8 || file == 8) {
+        if (rank == 8) {
             return;
         }
         if (selected_token.equals("")) {
@@ -147,9 +168,12 @@ public class MainActivity extends AppCompatActivity {
             board[rank][file] = "";
             selected_rank = rank;
             selected_file = file;
+            resetEnPassant();
         }
         else if (tokenImg.containsKey(selected_token)) {
-            if (checkMove(rank, file)) {
+            // Filter illegal movements and self-check
+            if (checkMovement(rank, file, board)) {
+                resolveEnPassant();
                 changeTurns();
             }
             else {
@@ -164,13 +188,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkMove(int rank, int file) {
+    private void resolveEnPassant() {
+        if (whose_turn == 'w' && wep_attack_pending) {
+            refreshCellView(bep_head_rank, bep_head_file, 0);
+            board[bep_head_rank][bep_head_file] = "";
+        } else if (whose_turn == 'b' && bep_attack_pending){
+            refreshCellView(wep_head_rank, wep_head_file, 0);
+            board[wep_head_rank][wep_head_file] = "";
+        }
+    }
+
+    private boolean checkMovement(int rank, int file, String[][] state) {
         // Check that piece was not placed in its original position
         if (rank == selected_rank && file == selected_file) {
             return false;
         }
         // Check that player is not taking their own piece
-        String taken = board[rank][file];
+        String taken = state[rank][file];
         if (!taken.equals("")) {
             char moved_color = selected_token.charAt(0),
                     taken_color = taken.charAt(0);
@@ -212,33 +246,55 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-        // TODO: Check that resulting state
-        //  does not cause self-check
         return true;
     }
 
     private boolean checkPawnMove(int rank, int file, String taken) {
         // Get direction for current team
-        int forward = this.whose_turn == 'w' ? 1 : -1;
+        int forward = whose_turn == 'w' ? 1 : -1;
         // Get distances traveled
-        int rank_diff = rank - this.selected_rank,
-                file_diff = file - this.selected_file;
-        // Check for three cases:
+        int rank_diff = rank - selected_rank,
+                file_diff = file - selected_file;
+        // Check for 4 cases:
         if (file_diff == 0 && taken.equals("")) {
         // 1. One space forward
             if (rank_diff == forward) {
                 return true;
             }
             // Get starting rank
-            int start = this.whose_turn == 'w' ? 1 : 6;
+            int start = whose_turn == 'w' ? 1 : 6;
         // 2. First move; two spaces
-            if (this.selected_rank == start && rank_diff == 2 * forward) {
+            if (selected_rank == start && rank_diff == 2 * forward
+                    && clearRankOrFile(rank, file)) {
+                // Set appropriate en passant flags
+                if (whose_turn == 'w') {
+                    wep_head_rank = rank;
+                    wep_head_file = file;
+                    wep_tail_rank = rank-1;
+                    wep_tail_file = file;
+                } else {
+                    bep_head_rank = rank;
+                    bep_head_file = file;
+                    bep_tail_rank = rank+1;
+                    bep_tail_file = file;
+                }
                 return true;
             }
         }
-        // 3. Diagonal attack
+        // 3. Normal diagonal attack
         if (Math.abs(file_diff) == 1 && rank_diff == forward && !taken.equals("")) {
             return true;
+        };
+        // 4. En passant attack
+        if (Math.abs(file_diff) == 1 && rank_diff == forward && taken.equals("")) {
+            // Set appropriate en passant flags
+            if (whose_turn == 'w' && rank == bep_tail_rank && file == bep_tail_file) {
+                wep_attack_pending = true;
+                return true;
+            } else if (whose_turn == 'b' && rank == wep_tail_rank && file == wep_tail_file) {
+                bep_attack_pending = true;
+                return true;
+            }
         }
         return false;
     }
@@ -292,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
         // Check each cell between
         while (r != rank || f != file) {
             // Check this cell
-            if (board[r][f] != "") {
+            if (!board[r][f].equals("")) {
                 // Cell isn't empty! Move blocked!
                 return false;
             }
@@ -321,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         // Check that each intermediate cell is empty
         while (r != rank || f != file) {
             // Check this cell
-            if (board[r][f] != "") {
+            if (!board[r][f].equals("")) {
                 // Cell isn't empty! Move blocked!
                 return false;
             }
