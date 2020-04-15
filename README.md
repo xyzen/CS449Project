@@ -1,2 +1,2 @@
 ﻿# xyChess
-  A simple chess GUI
+  A simple chess app for Android
