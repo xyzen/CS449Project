@@ -7,15 +7,21 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    BoardState board_state;
-    private boolean selection_pending = false;
+    BoardState board_state = new BoardState();
+    private boolean selection_pending;
+    private int selected_rank, selected_file;
+
+    public MainActivity() {
+        selection_pending = false;
+        selected_rank = selected_file = 8;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // initialize board
-        initBoard(findViewById(0));
+        newGame();
     }
 
     private static final java.util.HashMap<String, Integer>
@@ -50,18 +56,26 @@ public class MainActivity extends AppCompatActivity {
             { R.id.cell_a7, R.id.cell_b7, R.id.cell_c7, R.id.cell_d7, R.id.cell_e7, R.id.cell_f7, R.id.cell_g7, R.id.cell_h7 }
     };
 
-    public void newGame(android.view.View view) {
+    public void newGameDialog(android.view.View view) {
         ConfirmNewGameDialog cngd = new ConfirmNewGameDialog(this);
         cngd.show(getSupportFragmentManager(), "confirm");
     }
 
-    private void initBoard(android.view.View view) {
-        board_state.init();
+    public void newGame() {
+        board_state = new BoardState();
         refreshBoardView();
-        refreshTurnView("White to Move");
+        refreshTurnView();
     }
 
-    private void refreshTurnView(String text) {
+    private void refreshTurnView() {
+        if (board_state.whoseTurn() == 'w') {
+            setTurnView("White to Move");
+        } else {
+            setTurnView("Black to Move");
+        }
+    }
+
+    private void setTurnView(String text) {
         ((TextView) findViewById(R.id.turn_indicator))
                 .setText(text);
     }
@@ -70,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         String piece;
         for (int rank = 0; rank < 8; rank++) {
             for (int file = 0; file < 8; file++) {
-                piece = board_state.getRankFile(rank, file);
+                piece = board_state.getToken(rank, file);
                 if (tokenImg.containsKey(piece)) {
                     refreshCellView(rank, file, tokenImg.get(piece));
                 }
@@ -86,45 +100,38 @@ public class MainActivity extends AppCompatActivity {
                 .setImageResource(drawable);
     }
 
-    public void selectCell(android.view.View view) {
-        int view_id = view.getId();
-        int rank = 8, file = 8;
+    private int[] getCellRankFile(int view_id) {
+        int[] rank_file = { 8, 8 };
         for (int r = 0; r < 8; r++) {
             for (int f = 0; f < 8; f++) {
                 if (cells[r][f] == view_id) {
-                    rank = r;
-                    file = f;
+                    rank_file[0] = r;
+                    rank_file[1] = f;
                     break;
                 }
             }
         }
-        if (rank == 8) {
-            return;
-        }
-        if (!selection_pending) {
-            String token = board_state.getRankFile(rank, file);
-            // Check for empty selections or out-of-turn moves
-            if (token.equals("") || token.charAt(0) != board_state.whoseTurn()) {
-                return;
-            }
-            selection_pending = !selection_pending;
+        return rank_file;
+    }
+
+    public void selectCell(android.view.View view) {
+        int[] rank_file = getCellRankFile(view.getId());
+        int rank = rank_file[0], file = rank_file[1];
+        if (selection_pending) {
+            board_state.submitMove(selected_rank, selected_file, rank, file);
+            refreshBoardView();
+            refreshTurnView();
+            selection_pending = false;
         }
         else {
-            // Filter illegal movements and self-check
-            if (checkMovement(rank, file, board)) {
-                resolveEnPassant();
-                changeTurns();
+            String token = board_state.getToken(rank, file);
+            // Check for empty selections or out-of-turn moves
+            if (!token.equals("") && token.charAt(0) == board_state.whoseTurn()) {
+                refreshCellView(rank, file, 0);
+                selected_rank = rank;
+                selected_file = file;
+                selection_pending = true;
             }
-            else {
-                rank  = selected_rank;
-                file  = selected_file;
-            }
-            refreshCellView(rank, file, tokenImg.get(selected_token));
-            board[rank][file] = selected_token;
-            selected_token = "";
-            selected_rank  = 8;
-            selected_file  = 8;
-            selection_pending = !selection_pending;
         }
     }
 }
