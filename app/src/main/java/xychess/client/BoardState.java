@@ -8,12 +8,12 @@ public class BoardState {
     // Basic turn flag
     private char whose_turn;
 
-    // White En Passant (wep) flags
+    // White En Passant (WEP) flags
     private boolean wep_attack_pending;
     private int wep_head_rank, wep_head_file,
             wep_tail_rank, wep_tail_file;
 
-    // Black En Passant (bep) flags
+    // Black En Passant (BEP) flags
     private boolean bep_attack_pending;
     private int bep_head_rank, bep_head_file,
             bep_tail_rank, bep_tail_file;
