@@ -24,6 +24,9 @@ public class BoardState {
             bk_moved, bra_moved, brh_moved,
             ba_cstl_pending, bh_cstl_pending;
 
+    // Endgame flags
+    private boolean is_end, checkmate, stalemate;
+
     public BoardState() {
         newGame();
     }
@@ -53,6 +56,7 @@ public class BoardState {
                 = bk_moved = bra_moved = brh_moved
                 = ba_cstl_pending = bh_cstl_pending
                 = false;
+        is_end = checkmate = stalemate = false;
     }
 
     public String getToken(int rank, int file) {
@@ -73,8 +77,13 @@ public class BoardState {
             return false;
         BoardState new_state = commitMove(old_rank, old_file, new_rank, new_file);
         boolean legal_state = !new_state.inCheck(whose_turn);
-        if (legal_state)
+        if (legal_state) {
             setState(new_state);
+            if (assessCheckmate(whose_turn)) {
+                is_end = true;
+                checkmate = true;
+            }
+        }
         else
             resetCastlePending();
         return legal_state;
@@ -167,12 +176,39 @@ public class BoardState {
         return new_state;
     }
 
+    private boolean assessCheckmate(char team) {
+        BoardState new_state = new BoardState();
+        String token;
+        if (inCheck(team)) {
+            for (int r1 = 0; r1 < 8; r1++) {
+                for (int f1 = 0; f1 < 8; f1++) {
+                    for (int r2 = 0; r2 < 8; r2++) {
+                        for (int f2 = 0; f2 < 8; f2++) {
+                            token = board[r1][f1];
+                            if (token.equals("") || token.charAt(0) != team)
+                                continue;
+                            new_state.setState(this);
+                            new_state.resetEnPassant();
+                            if (new_state.checkMovement(r1, f1, r2, f2, true)) {
+                                new_state = new_state.commitMove(r1, f1, r2, f2);
+                                if (!new_state.inCheck(team))
+                                    return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     private boolean underAttack(char team, int rank, int file) {
         String token;
         char color;
         char opponent = opponent(team);
-        for (int r = 0; r < board.length; r++) {
-            for (int f = 0; f < board[r].length; f++) {
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
                 token = board[r][f];
                 if (token.equals(""))
                     continue;
@@ -194,7 +230,11 @@ public class BoardState {
 
     private int[] getKingRankFile(char team) {
         // Get appropriate King token
-        String target = String.copyValueOf(new char[]{team, 'k'});
+        String target;
+        if (team == 'w')
+            target = "wk";
+        else
+            target = "bk";
         int[] rank_file = {8,8};
         for (int r = 0; r < board.length; r++) {
             for (int f = 0; f < board[r].length; f++) {
@@ -233,6 +273,9 @@ public class BoardState {
         brh_moved = other.brh_moved;
         ba_cstl_pending = other.ba_cstl_pending;
         bh_cstl_pending = other.bh_cstl_pending;
+        is_end = other.is_end;
+        checkmate = other.checkmate;
+        stalemate = other.stalemate;
     }
 
     private boolean checkMovement(int old_rank, int old_file, int new_rank, int new_file, boolean flagging) {
