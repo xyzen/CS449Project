@@ -67,6 +67,12 @@ public class BoardState {
         return whose_turn;
     }
 
+    public boolean isEnd() { return is_end; }
+
+    public boolean isCheckmate() { return checkmate; }
+
+    public boolean isStalemate() { return stalemate; }
+
     private char opponent(char team) {
         return team == 'w' ? 'b' : 'w';
     }

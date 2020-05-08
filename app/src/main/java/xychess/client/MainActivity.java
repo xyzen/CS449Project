@@ -120,7 +120,15 @@ public class MainActivity extends AppCompatActivity {
         if (selection_pending) {
             board_state.submitMove(selected_rank, selected_file, rank, file);
             refreshBoardView();
-            refreshTurnView();
+            if (board_state.isCheckmate()) {
+                String message = board_state.whoseTurn() == 'w' ? "Black" : "White";
+                message = "Checkmate! " + message + " wins";
+                CheckmateDialog chkmt = new CheckmateDialog(message);
+                setTurnView(message);
+                chkmt.show(getSupportFragmentManager(), "checkmate");
+            } else {
+                refreshTurnView();
+            }
             selection_pending = false;
         }
         else {
