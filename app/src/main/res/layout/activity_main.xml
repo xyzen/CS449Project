@@ -8,11 +8,10 @@
 
     <TableLayout
         android:id="@+id/board"
-        android:layout_width="352dp"
-        android:layout_height="352dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="408dp"
+        android:layout_height="408dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,9 +19,98 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TableRow
+            android:id="@+id/top_file_label"
+            android:layout_width="match_parent"
+            android:layout_height="32dp">
+
+            <TextView></TextView>
+
+            <TextView
+                android:id="@+id/top_file_a"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="a"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_b"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="b"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_c"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="c"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_d"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="d"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_e"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="e"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_f"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="f"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_g"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="g"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/top_file_h"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="h"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+        </TableRow>
+
+        <TableRow
             android:id="@+id/rank7"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_8"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="8"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a7"
@@ -87,12 +175,30 @@
                 android:background="@color/colorBoard1"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_8"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="8"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank6"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_7"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="7"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a6"
@@ -157,12 +263,30 @@
                 android:background="@color/colorBoard2"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_7"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="7"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank5"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_6"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="6"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a5"
@@ -227,12 +351,30 @@
                 android:background="@color/colorBoard1"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_6"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="6"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank4"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_5"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="5"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a4"
@@ -298,12 +440,30 @@
                 android:clickable="true"
                 android:onClick="selectCell" />
 
+            <TextView
+                android:id="@+id/right_rank_5"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="5"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
         </TableRow>
 
         <TableRow
             android:id="@+id/rank3"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_4"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="4"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a3"
@@ -368,12 +528,30 @@
                 android:background="@color/colorBoard1"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_4"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="4"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank2"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_3"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="3"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a2"
@@ -438,12 +616,30 @@
                 android:background="@color/colorBoard2"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_3"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="3"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank1"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_2"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="2"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a1"
@@ -508,12 +704,30 @@
                 android:background="@color/colorBoard1"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_2"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="2"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
 
         <TableRow
             android:id="@+id/rank0"
             android:layout_width="match_parent"
             android:layout_height="43dp">
+
+            <TextView
+                android:id="@+id/left_rank_1"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
 
             <ImageView
                 android:id="@+id/cell_a0"
@@ -578,6 +792,95 @@
                 android:background="@color/colorBoard2"
                 android:clickable="true"
                 android:onClick="selectCell" />
+
+            <TextView
+                android:id="@+id/right_rank_1"
+                android:layout_width="32dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center_horizontal"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/bottom_file_label"
+            android:layout_width="match_parent"
+            android:layout_height="32dp">
+
+            <TextView></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_a"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="a"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_b"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="b"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_c"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="c"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_d"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="d"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_e"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="e"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_f"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="f"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_g"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="g"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
+
+            <TextView
+                android:id="@+id/bottom_file_h"
+                android:layout_width="43dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:text="h"
+                android:textAlignment="center"
+                android:textSize="24dp"></TextView>
         </TableRow>
     </TableLayout>
 
@@ -585,8 +888,9 @@
         android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:onClick="newGameDialog"
         android:text="New Game"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -600,7 +904,7 @@
         android:id="@+id/turn_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="22dp"
         android:text="White to Move"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/reset_button"

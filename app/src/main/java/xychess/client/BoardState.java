@@ -84,11 +84,8 @@ public class BoardState {
         BoardState new_state = commitMove(old_rank, old_file, new_rank, new_file);
         boolean legal_state = !new_state.inCheck(whose_turn);
         if (legal_state) {
+            new_state.assessEnding(new_state.whose_turn);
             setState(new_state);
-            if (assessCheckmate(whose_turn)) {
-                is_end = true;
-                checkmate = true;
-            }
         }
         else
             resetCastlePending();
@@ -176,37 +173,48 @@ public class BoardState {
         new_state.board[old_rank][old_file] = "";
         new_state.board[new_rank][new_file] = token;
         new_state.resolveCastling();
+        new_state.resetCastlePending();
         new_state.updateCastleFlags(token, old_rank, old_file);
         new_state.resolveEnPassant();
         new_state.changeTurns();
         return new_state;
     }
 
-    private boolean assessCheckmate(char team) {
+    private void assessEnding(char team) {
+        boolean cannot_move = cannotMove(team),
+                in_check = inCheck(team);
+        if (in_check && cannot_move) {
+            checkmate = true;
+            is_end = true;
+        }
+        else if (cannot_move) {
+            stalemate = true;
+            is_end = true;
+        }
+    }
+
+    private boolean cannotMove(char team) {
         BoardState new_state = new BoardState();
         String token;
-        if (inCheck(team)) {
-            for (int r1 = 0; r1 < 8; r1++) {
-                for (int f1 = 0; f1 < 8; f1++) {
-                    for (int r2 = 0; r2 < 8; r2++) {
-                        for (int f2 = 0; f2 < 8; f2++) {
-                            token = board[r1][f1];
-                            if (token.equals("") || token.charAt(0) != team)
-                                continue;
-                            new_state.setState(this);
-                            new_state.resetEnPassant();
-                            if (new_state.checkMovement(r1, f1, r2, f2, true)) {
-                                new_state = new_state.commitMove(r1, f1, r2, f2);
-                                if (!new_state.inCheck(team))
-                                    return false;
-                            }
+        for (int r1 = 0; r1 < 8; r1++) {
+            for (int f1 = 0; f1 < 8; f1++) {
+                for (int r2 = 0; r2 < 8; r2++) {
+                    for (int f2 = 0; f2 < 8; f2++) {
+                        token = board[r1][f1];
+                        if (token.equals("") || token.charAt(0) != team)
+                            continue;
+                        new_state.setState(this);
+                        new_state.resetEnPassant();
+                        if (new_state.checkMovement(r1, f1, r2, f2, true)) {
+                            new_state = new_state.commitMove(r1, f1, r2, f2);
+                            if (!new_state.inCheck(team))
+                                return false;
                         }
                     }
                 }
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     private boolean underAttack(char team, int rank, int file) {
@@ -284,7 +292,8 @@ public class BoardState {
         stalemate = other.stalemate;
     }
 
-    private boolean checkMovement(int old_rank, int old_file, int new_rank, int new_file, boolean flagging) {
+    private boolean checkMovement(int old_rank, int old_file,
+                                  int new_rank, int new_file, boolean flagging) {
         // Filter movements with same origin and destination
         if (new_rank == old_rank && new_file == old_file) {
             return false;
@@ -302,7 +311,8 @@ public class BoardState {
         char piece_type = moved_token.charAt(1);
         switch(piece_type) {
             case('p'):
-                if (!checkPawnMove(old_rank, old_file, new_rank, new_file, taken, moved_color, flagging)) {
+                if (!checkPawnMove(old_rank, old_file, new_rank,
+                        new_file, taken, moved_color, flagging)) {
                     return false;
                 }
                 break;
@@ -335,7 +345,8 @@ public class BoardState {
         return true;
     }
 
-    private boolean checkPawnMove(int old_rank, int old_file, int new_rank, int new_file, String taken, char team, boolean flagging) {
+    private boolean checkPawnMove(int old_rank, int old_file, int new_rank,
+                                  int new_file, String taken, char team, boolean flagging) {
         // Get direction for current team
         int forward = team == 'w' ? 1 : -1;
         // Get distances traveled
