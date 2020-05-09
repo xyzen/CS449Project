@@ -27,6 +27,10 @@ Castling
   * If a king and rook have not been moved, and each space between them is clear, they can perform a special move known as 'castling,' provided that neither they nor the spaces between them are 'threatened.'
   * Example: 1. e4 e5 2. Bc4 Bc5 3. Nf3 Nf6 4. Kg1 Kg8 (denoted: 4. O-O O-O)
 
+Check
+    * If a player's king is under attack, the text below will be updated to say, "Check!"
+    * Example: 1. e4 e5 2. f4 Qh4! (White is in Check)
+
 Checkmate
   * When a player is in check and has no move available to escape it, they have been checkmated.
   * Fool's Mate: 1. f3 e5 2. g4 Qh4# (Black wins)
