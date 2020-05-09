@@ -126,10 +126,15 @@ public class MainActivity extends AppCompatActivity {
                 CheckmateDialog chkmt = new CheckmateDialog(message);
                 setTurnView(message);
                 chkmt.show(getSupportFragmentManager(), "checkmate");
-            } else if (board_state.isStalemate()) {;
+            } else if (board_state.isStalemate()) {
                 CheckmateDialog stlmt = new CheckmateDialog("Stalemate!");
                 setTurnView("Stalemate!");
                 stlmt.show(getSupportFragmentManager(), "stalemate");
+            } else if (board_state.isCheck()){
+                String message = "Check! ";
+                message += board_state.whoseTurn() =='w' ? "White" : "Black";
+                message += " to Move";
+                setTurnView(message);
             } else {
                 refreshTurnView();
             }

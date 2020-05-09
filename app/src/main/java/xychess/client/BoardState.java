@@ -25,7 +25,7 @@ public class BoardState {
             ba_cstl_pending, bh_cstl_pending;
 
     // Endgame flags
-    private boolean is_end, checkmate, stalemate;
+    private boolean check, checkmate, stalemate;
 
     public BoardState() {
         newGame();
@@ -56,7 +56,7 @@ public class BoardState {
                 = bk_moved = bra_moved = brh_moved
                 = ba_cstl_pending = bh_cstl_pending
                 = false;
-        is_end = checkmate = stalemate = false;
+        check = checkmate = stalemate = false;
     }
 
     public String getToken(int rank, int file) {
@@ -67,7 +67,7 @@ public class BoardState {
         return whose_turn;
     }
 
-    public boolean isEnd() { return is_end; }
+    public boolean isCheck() { return check; }
 
     public boolean isCheckmate() { return checkmate; }
 
@@ -181,15 +181,16 @@ public class BoardState {
     }
 
     private void assessEnding(char team) {
+        check = false;
         boolean cannot_move = cannotMove(team),
                 in_check = inCheck(team);
         if (in_check && cannot_move) {
             checkmate = true;
-            is_end = true;
+        } else if (in_check) {
+            check = true;
         }
         else if (cannot_move) {
             stalemate = true;
-            is_end = true;
         }
     }
 
@@ -287,7 +288,7 @@ public class BoardState {
         brh_moved = other.brh_moved;
         ba_cstl_pending = other.ba_cstl_pending;
         bh_cstl_pending = other.bh_cstl_pending;
-        is_end = other.is_end;
+        check = other.check;
         checkmate = other.checkmate;
         stalemate = other.stalemate;
     }
