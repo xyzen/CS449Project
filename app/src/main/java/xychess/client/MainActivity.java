@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             refreshBoardView();
             if (board_state.isCheckmate()) {
                 String message = board_state.whoseTurn() == 'w' ? "Black" : "White";
-                message = "Checkmate! " + message + " wins";
+                message = "Checkmate! " + message + " Wins";
                 CheckmateDialog chkmt = new CheckmateDialog(message);
                 setTurnView(message);
                 chkmt.show(getSupportFragmentManager(), "checkmate");
